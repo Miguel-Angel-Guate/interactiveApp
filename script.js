@@ -38,21 +38,22 @@ const appendImage = (parameter) => {
 
 };
 
-const showMessage = (index) => {
-    if (index < firstPartMessages.length) {
-        displayMessage(firstPartMessages[index]);
-        setTimeout(() => {
-            clearMessage();
-            showMessage(index + 1);
-        }, 1000);
-    } else {
-        secondPartMessages.forEach(message => {
-            appendParagraph(message);
-        });
-        appendImage(!document.querySelector('#there img'));
-    }
-};
+const show2PartesMessage = (index = 0) => { 
+    index < firstPartMessages.length 
+      ? (
+          displayMessage(firstPartMessages[index]),
+          setTimeout(() => {
+            clearMessage(); 
+            show2PartesMessage(index + 1);
+          }, 1000)
+        )
+      : (
+          secondPartMessages.forEach(message => appendParagraph(message)),
+          !document.querySelector('#there img') && appendImage()
+        );
+  };
 
+ 
 window.addEventListener("load", (event) => {
-    showMessage(0);
+    show2PartesMessage();
 });
