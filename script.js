@@ -22,7 +22,7 @@ window.addEventListener("load", (event) => {
                 const imageElement = document.getElementById('there').appendChild(img);
 
                 imageElement.addEventListener("click", () => {
-                    console.log("clicked");
+                    console.log("soy Silvia");
                 });
 
                 return
@@ -39,3 +39,4 @@ window.addEventListener("load", (event) => {
         showMessage(currentIndex);
     }, 1000);
 });
+  
