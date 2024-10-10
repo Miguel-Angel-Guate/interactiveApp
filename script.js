@@ -6,44 +6,53 @@ const messages = [
     "Turn the sound on",
 ];
 
-const  renderParts = (firstPartMessages, secondPartMessages) => {
-    const element = document.getElementById('there');
-    let currentIndex = 0;
+const firstPartMessages = messages.slice(0, 3);
+const secondPartMessages = messages.slice(3);
 
-    const showMessage = (index) => {
-        if (index < firstPartMessages.length) {
-            element.innerHTML = firstPartMessages[index];
-            setTimeout(() => {
-                element.innerHTML = "";
-                showMessage(index + 1);
-            }, 1000);
-        } else {
-            secondPartMessages.forEach(message => {
-                const p = document.createElement('p');
-                p.textContent = message;
-                there.appendChild(p);
-            });
-        
-            if (!document.querySelector('#there img')) {
-                const img = document.createElement("img");
-                img.src = "./assets/spe.png";
-                img.style.width = "80px";
-        
-                const imageElement = there.appendChild(img);
-        
-                imageElement.addEventListener("click", () => {
-                    console.log("soy Silvia");
-                });
-            }
-        }
-    };
+const element = document.getElementById('there');
 
-    showMessage(currentIndex);
-}
+const displayMessage = (message) => {
+    element.innerHTML = message;
+};
+
+const clearMessage = () => {
+    element.innerHTML = "";
+};
+
+const appendParagraph = (message) => {
+    const p = document.createElement('p');
+    p.textContent = message;
+    element.appendChild(p);
+};
+
+const appendImage = (parameter) => {
+    const img = document.createElement("img");
+    img.src = "./assets/spe.png";
+    img.style.width = "80px";
+
+    const imageElement = element.appendChild(img);
+    const eventoImage = imageElement.addEventListener("click", () => {
+        console.log("soy Silvia");
+    });
+    return eventoImage;
+
+};
+
+const showMessage = (index) => {
+    if (index < firstPartMessages.length) {
+        displayMessage(firstPartMessages[index]);
+        setTimeout(() => {
+            clearMessage();
+            showMessage(index + 1);
+        }, 1000);
+    } else {
+        secondPartMessages.forEach(message => {
+            appendParagraph(message);
+        });
+        appendImage(!document.querySelector('#there img'));
+    }
+};
 
 window.addEventListener("load", (event) => {
-    const firstPartMessages = messages.slice(0, 3);
-    const secondPartMessages = messages.slice(3);
-    renderParts(firstPartMessages, secondPartMessages);
+    showMessage(0);
 });
-
