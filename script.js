@@ -5,17 +5,6 @@ const messages = [
     "Are you ready to connect with God?",
     "Turn the sound",
 ];
-const turnIndications = [
-    "On",
-    "Off",
-    "Pause",
-]
-const turnIndication = (position) => {
-    position = 0 ? turnIndications[0] : position === 1 ? turnIndications[1] : turnIndications[2];
-
-    console.log("🚀 ~ turnIndication ~ position:", position)
-    return position;
-}
 
 const firstPartMessages = messages.slice(0, 3);
 const secondPartMessages = messages.slice(3);
@@ -46,10 +35,13 @@ const appendImage = () => {
     img.src = "./assets/spe.png";
     img.style.width = "80px";
 
-    const imageElement = element.appendChild(img);
+    const imageElement = element.appendChild(img)
+   /*  imageElement.style.backgroundColor = "black"; */
     const audio = new Audio("./assets/GodTime.mp3");
     imageElement.addEventListener("click", () => {
         toggleAudio(audio, imageElement);
+        clearMessage();
+
 
     });
 };
@@ -57,16 +49,17 @@ const appendImage = () => {
 const show2PartesMessage = (index = 0) => {
     index < firstPartMessages.length ?
         (
+            
             displayMessage(firstPartMessages[index]),
             setTimeout(() => {
                 clearMessage();
                 show2PartesMessage(index + 1);
-            }, 1000)
+            }, 2000)
+
         ) :
         (
 
             secondPartMessages.forEach(message => appendParagraph(message)),
-            appendParagraph(turnIndications[0]),
             !document.querySelector('#there img') && appendImage()
         );
 };
