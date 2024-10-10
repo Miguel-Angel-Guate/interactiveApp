@@ -10,6 +10,7 @@ const firstPartMessages = messages.slice(0, 3);
 const secondPartMessages = messages.slice(3);
 
 const element = document.getElementById('there');
+const getDivClassDynamic = document.getElementsByClassName('childDinamyc')
 
 const displayMessage = (message) => {
     element.innerHTML = message;
@@ -41,6 +42,9 @@ const appendImage = () => {
     imageElement.addEventListener("click", () => {
         toggleAudio(audio, imageElement);
         clearMessage();
+       getDivClassDynamic[0].style.background = 'aqua'
+        document.body.style.background = 'aqua';
+
 
 
     });
