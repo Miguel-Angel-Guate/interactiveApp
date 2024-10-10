@@ -2,41 +2,48 @@ const messages = [
     "Please hold, as we load up the best experience for you...",
     "Loading content, please wait...",
     "You're all set!",
-    "Best Experience with Angel",
+    "Best Experience with the guys..",
     "Turn the sound on",
 ];
 
-
-window.addEventListener("load", (event) => {
-
+const  renderParts = (firstPartMessages, secondPartMessages) => {
+    const element = document.getElementById('there');
     let currentIndex = 0;
 
     const showMessage = (index) => {
-        if (index < messages.length) {
-            document.getElementById('there').innerHTML = messages[index];
-            if (index >= messages.length - 1) {
+        if (index < firstPartMessages.length) {
+            element.innerHTML = firstPartMessages[index];
+            setTimeout(() => {
+                element.innerHTML = "";
+                showMessage(index + 1);
+            }, 1000);
+        } else {
+            secondPartMessages.forEach(message => {
+                const p = document.createElement('p');
+                p.textContent = message;
+                there.appendChild(p);
+            });
+        
+            if (!document.querySelector('#there img')) {
                 const img = document.createElement("img");
                 img.src = "./assets/spe.png";
                 img.style.width = "80px";
-
-                const imageElement = document.getElementById('there').appendChild(img);
-
+        
+                const imageElement = there.appendChild(img);
+        
                 imageElement.addEventListener("click", () => {
                     console.log("soy Silvia");
                 });
-
-                return
             }
-            setTimeout(() => {
-                document.getElementById('there').innerHTML = "";
-
-                showMessage(index + 1);
-            }, 1000);
         }
-    }
+    };
 
-    setTimeout(() => {
-        showMessage(currentIndex);
-    }, 1000);
+    showMessage(currentIndex);
+}
+
+window.addEventListener("load", (event) => {
+    const firstPartMessages = messages.slice(0, 3);
+    const secondPartMessages = messages.slice(3);
+    renderParts(firstPartMessages, secondPartMessages);
 });
-  
+
