@@ -32,7 +32,7 @@ const appendImage = (parameter) => {
 
     const imageElement = element.appendChild(img);
     const eventoImage = imageElement.addEventListener("click", () => {
-        console.log("soy Silvia");
+         img.src = "./assets/no-sound.png"
     });
     return eventoImage;
 
