@@ -6,16 +6,18 @@ const messages = [
     "Turn the sound",
 ];
 
-/* const imagePlayBarContainer = {
-    "pause" : "./assets/pause.png",
-    "reload" : "./assets/reload.png"
-} */
 
-const imagePlayContainer = [
-    "./assets/pause.png",
-    "./assets/reload.png"
-]
-console.log(typeof imagePlayBarContainer)
+const imagePlayBarContainer = {
+    "pause": "assets/pause.png",
+    "reload": "assets/reload.png",
+    "play": "assets/play.png",
+}
+
+let getKeys = Object.entries(imagePlayBarContainer).map(([key, value]) => {
+    return key + value;
+});
+
+
 let musicPlay = false
 
 const firstPartMessages = messages.slice(0, 3);
@@ -25,7 +27,7 @@ let audio;
 const element = document.getElementById('there');
 const getDivClassDynamic = document.getElementsByClassName('childDinamyc')
 const getContainer = document.getElementsByClassName('container')[0]
-console.log("🚀 ~ getContainer:", getContainer)
+
 
 const playBarContainer = (item) => {
     let result
@@ -56,7 +58,6 @@ const toggleAudio = (audio, img) => {
 };
 
 const createImage = (srcImage, widthImage, height) => {
-
     let imageCreated;
 
     let createTagImage = document.createElement("img");
@@ -66,9 +67,56 @@ const createImage = (srcImage, widthImage, height) => {
     imageCreated = createTagImage
 
     return imageCreated
-
 }
-const appendImage = () => {
+
+
+const playAudio = (audioElement) => {
+    audioElement.play();
+    toggleImages("pause", "play");
+};
+
+const pauseAudio = (audioElement) => {
+    audioElement.pause();
+    toggleImages("play", "pause");
+};
+
+const reloadAudio = (audioElement) => {
+    audioElement.currentTime = 0;
+};
+
+const toggleImages = (showType, hideType) => {
+    document.querySelector(`[data-type="${hideType}"]`).style.display = "none";
+    document.querySelector(`[data-type="${showType}"]`).style.display = "inline";
+};
+
+
+const createImageWithListener = (imagesArray, widthImage, heightImage, audioElement) => {
+    const actionMap = {
+        "play": () => playAudio(audioElement),
+        "pause": () => pauseAudio(audioElement),
+        "reload": () => reloadAudio(audioElement)
+    };
+
+    imagesArray.forEach(imageObj => {
+
+        const [type, srcImage] = imageObj;
+        let createTagImage = createImage(srcImage, widthImage, heightImage)
+
+        type === "play"  ? createTagImage.style.display = "none" : createTagImage.style.display = "inline";
+
+
+        createTagImage.addEventListener('click', actionMap[type]);
+
+        createTagImage.setAttribute('data-type', type);
+
+
+        let playDivContainer = document.getElementsByClassName('playBarContainer');
+        playDivContainer[0].appendChild(createTagImage)
+    });
+};
+
+
+const renderImageAndOthersthing = () => {
 
     const srcImage = "./assets/spe.png";
     const widthImage = "80px";
@@ -83,15 +131,9 @@ const appendImage = () => {
         getDivClassDynamic[0].style.background = 'black'
         document.body.style.background = 'black';
         playBarContainer(getContainer)
+        let playDivContainer = document.getElementsByClassName('playBarContainer');
+        createImageWithListener(Object.entries(imagePlayBarContainer), "auto", "30px", audio);
 
-        let playDivContainer = document.getElementsByClassName('playBarContainer')
-        playDivContainer ? (
-            playDivContainer[0].appendChild(createImage(pauseImage, "auto", "30px")),
-            playDivContainer[0].appendChild(createImage(reloadImage, "auto", "30px"))
-
-        ) : (
-            console.log('hello')
-        )
     });
 };
 
@@ -110,7 +152,7 @@ const show2PartesMessage = (index = 0) => {
         (
 
             secondPartMessages.forEach(message => appendParagraph(message)),
-            !document.querySelector('#there img') && appendImage()
+            !document.querySelector('#there img') && renderImageAndOthersthing()
         );
 };
 
