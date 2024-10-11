@@ -8,9 +8,27 @@ const messages = [
 
 const firstPartMessages = messages.slice(0, 3);
 const secondPartMessages = messages.slice(3);
+let audio;
 
 const element = document.getElementById('there');
 const getDivClassDynamic = document.getElementsByClassName('childDinamyc')
+const getContainer = document.getElementsByClassName('container')[0]
+console.log("🚀 ~ getContainer:", getContainer)
+
+const playBar = (item) => {
+    let result
+    const divContentPlay = document.createElement('div')
+    divContentPlay.classList.add('barClass')
+
+    result = item.appendChild(divContentPlay)
+    return result
+}
+
+/* const controlPlayBar = (audioItem, play, pause, reload) => {
+    audioItem.play ? (
+
+    )
+} */
 
 const displayMessage = (message) => {
     element.innerHTML = message;
@@ -31,21 +49,33 @@ const toggleAudio = (audio, img) => {
     audio.paused ? (audio.play(), img.src = "./assets/no-sound.png") : (audio.pause(), img.src = "./assets/pause.png");
 };
 
+const createImage = (item, linkImage, widthImage, numberPx) => {
+    let addingItem = document.createElement("img");
+    addingItem.src = linkImage;
+    addingItem.style.width = numberPx;
+    return addingItem;
+}
+
+
 const appendImage = () => {
-    const img = document.createElement("img");
+    /* const img = document.createElement("img");
     img.src = "./assets/spe.png";
     img.style.width = "80px";
+    const speakerImage = "./assets/spe.png" */
+    const item = document.getElementsByClassName("childDinamyc");
+    const speakerImage = "./assets/spe.png";
+    const widthImage = "80px";
 
-    const imageElement = element.appendChild(img)
-   /*  imageElement.style.backgroundColor = "black"; */
-    const audio = new Audio("./assets/GodTime.mp3");
+    const imageElement = element.appendChild(createImage(item, speakerImage, widthImage, "80px"))
+    /*  imageElement.style.backgroundColor = "black"; */
+    audio = new Audio("./assets/GodTime.mp3");
     imageElement.addEventListener("click", () => {
         toggleAudio(audio, imageElement);
         clearMessage();
-       getDivClassDynamic[0].style.background = 'aqua'
+        getDivClassDynamic[0].style.background = 'aqua'
         document.body.style.background = 'aqua';
-
-
+        console.log(getContainer.firstChild)
+        playBar(getContainer)
 
     });
 };
@@ -53,12 +83,12 @@ const appendImage = () => {
 const show2PartesMessage = (index = 0) => {
     index < firstPartMessages.length ?
         (
-            
+
             displayMessage(firstPartMessages[index]),
             setTimeout(() => {
                 clearMessage();
                 show2PartesMessage(index + 1);
-            }, 2000)
+            }, 1000)
 
         ) :
         (
