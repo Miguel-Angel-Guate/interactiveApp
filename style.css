@@ -60,12 +60,16 @@ p {
     font-size: 23px;
     font-weight: 400;
 }
-.barClass {
+.playBarContainer {
     display: flex;
-    width: 60%;
-    background-color: black;
+    width: 40%;
+    background-color: white;
     height: 10vh;
     align-self: flex-end;
+    justify-content: space-around;
+    align-items: center;
+    margin-right: 10px;
+    margin-bottom: 10px;
 }
 
 /* spinner started header */
