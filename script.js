@@ -102,9 +102,8 @@ const createImageWithListener = (imagesArray, widthImage, heightImage, audioElem
         const [type, srcImage] = imageObj;
         let createTagImage = createImage(srcImage, widthImage, heightImage)
 
-        type === "play"  ? createTagImage.style.display = "none" : createTagImage.style.display = "inline";
-
-
+        type === "pause"  ?  createTagImage.style.display = "inline" : createTagImage.style.display = "none";
+        
         createTagImage.addEventListener('click', actionMap[type]);
 
         createTagImage.setAttribute('data-type', type);
@@ -120,8 +119,6 @@ const renderImageAndOthersthing = () => {
 
     const srcImage = "./assets/spe.png";
     const widthImage = "80px";
-    const pauseImage = "./assets/pause.png"
-    const reloadImage = "./assets/reload.png"
     const imageElement = element.appendChild(createImage(srcImage, widthImage))
     audio = new Audio("./assets/GodTime.mp3");
     imageElement.addEventListener("click", () => {
@@ -131,7 +128,7 @@ const renderImageAndOthersthing = () => {
         getDivClassDynamic[0].style.background = 'black'
         document.body.style.background = 'black';
         playBarContainer(getContainer)
-        let playDivContainer = document.getElementsByClassName('playBarContainer');
+       /*  debugger */
         createImageWithListener(Object.entries(imagePlayBarContainer), "auto", "30px", audio);
 
     });
