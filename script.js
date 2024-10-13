@@ -87,6 +87,7 @@ const reloadAudio = (audioElement) => {
 const toggleImages = (showType, hideType) => {
     document.querySelector(`[data-type="${hideType}"]`).style.display = "none";
     document.querySelector(`[data-type="${showType}"]`).style.display = "inline";
+    document.querySelector(`[data-type="reload"]`).style.display = "inline";
 };
 
 
