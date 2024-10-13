@@ -13,12 +13,10 @@ const imagePlayBarContainer = {
     "play": "assets/play.png",
 }
 
-let getKeys = Object.entries(imagePlayBarContainer).map(([key, value]) => {
-    return key + value;
-});
 
 
-let musicPlay = false
+
+
 
 const firstPartMessages = messages.slice(0, 3);
 const secondPartMessages = messages.slice(3);
@@ -125,26 +123,32 @@ const renderImageAndOthersthing = () => {
     imageElement.addEventListener("click", () => {
         toggleAudio(audio, imageElement);
         clearMessage();
-        musicPlay
         getDivClassDynamic[0].style.background = 'black'
         document.body.style.background = 'black';
         playBarContainer(getContainer)
-       /*  debugger */
         createImageWithListener(Object.entries(imagePlayBarContainer), "auto", "30px", audio);
 
     });
 };
 
+const createDivWithClass = () => {
+    const loaderDiv = document.createElement("div");
+    loaderDiv.className = "loader";
+    return loaderDiv;
+};
+
+let lodaderDiv = createDivWithClass("loader")
 
 const show2PartesMessage = (index = 0) => {
     index < firstPartMessages.length ?
         (
 
             displayMessage(firstPartMessages[index]),
+            getDivClassDynamic[0].appendChild(lodaderDiv),
             setTimeout(() => {
                 clearMessage();
                 show2PartesMessage(index + 1);
-            }, 1000)
+            }, 1500)
 
         ) :
         (
