@@ -11,6 +11,7 @@ const imagePlayBarContainer = {
     "pause": "assets/pause.png",
     "reload": "assets/reload.png",
     "play": "assets/play.png",
+    
 }
 
 
@@ -113,6 +114,15 @@ const createImageWithListener = (imagesArray, widthImage, heightImage, audioElem
     });
 };
 
+const renderAudio = (imageEl) => {
+    toggleAudio(audio, imageEl);
+        clearMessage();
+        getDivClassDynamic[0].style.background = 'black'
+        document.body.style.background = 'black';
+        playBarContainer(getContainer)
+        createImageWithListener(Object.entries(imagePlayBarContainer), "auto", "30px", audio);
+}
+
 
 const renderImageAndOthersthing = () => {
 
@@ -120,15 +130,7 @@ const renderImageAndOthersthing = () => {
     const widthImage = "80px";
     const imageElement = element.appendChild(createImage(srcImage, widthImage))
     audio = new Audio("./assets/GodTime.mp3");
-    imageElement.addEventListener("click", () => {
-        toggleAudio(audio, imageElement);
-        clearMessage();
-        getDivClassDynamic[0].style.background = 'black'
-        document.body.style.background = 'black';
-        playBarContainer(getContainer)
-        createImageWithListener(Object.entries(imagePlayBarContainer), "auto", "30px", audio);
-
-    });
+    imageElement.addEventListener("click", () => renderAudio(imageElement));
 };
 
 const createDivWithClass = () => {
